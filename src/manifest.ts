@@ -40,11 +40,11 @@ export async function getManifest() {
       'activeTab',
       'sidePanel',
     ],
-    host_permissions: ['*://*/*'],
+    host_permissions: ['https://github.com/*'],
     content_scripts: [
       {
         matches: [
-          '<all_urls>',
+          'https://github.com/*',
         ],
         js: [
           'dist/contentScripts/index.global.js',
