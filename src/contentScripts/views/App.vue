@@ -2,6 +2,7 @@
 import 'uno.css'
 </script>
 
+<!-- This is hard-coded mock data for the time being. Just figuring my way around Vue and unsight.dev still -->
 <template>
   <details class="grid gap-2">
     <summary>Similar issues</summary>
