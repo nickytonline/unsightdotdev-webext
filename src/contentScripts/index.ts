@@ -8,6 +8,14 @@ import { setupApp } from '~/logic/common-setup'
 (() => {
   console.info('[vitesse-webext] Hello world from content script')
 
+  // We can check the path, but a getElementById is a fast check
+  // Note that with GitHub, they change the UI occasionally so this might break
+  const issueHeader = document.getElementById('partial-discussion-header')
+
+  if (!issueHeader) {
+    return
+  }
+
   // communication example: send previous tab title from background page
   onMessage('tab-prev', ({ data }) => {
     console.log(`[vitesse-webext] Navigate from page "${data.title}"`)
@@ -15,6 +23,10 @@ import { setupApp } from '~/logic/common-setup'
 
   // mount component to context window
   const container = document.createElement('div')
+
+  // mount the app in the GitHub issue header
+  issueHeader.lastChild?.after(container)
+
   container.id = __NAME__
   const root = document.createElement('div')
   const styleEl = document.createElement('link')
@@ -23,7 +35,7 @@ import { setupApp } from '~/logic/common-setup'
   styleEl.setAttribute('href', browser.runtime.getURL('dist/contentScripts/style.css'))
   shadowDOM.appendChild(styleEl)
   shadowDOM.appendChild(root)
-  document.body.appendChild(container)
+
   const app = createApp(App)
   setupApp(app)
   app.mount(root)
